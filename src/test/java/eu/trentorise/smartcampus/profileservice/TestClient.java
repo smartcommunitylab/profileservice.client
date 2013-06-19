@@ -41,8 +41,8 @@ public class TestClient {
 
 	@Before
 	public void init() {
-		profileConnector = new ProfileService("https://vas-dev.smartcampuslab.it/profileservice");
-		socialConnector = new SocialService("https://vas-dev.smartcampuslab.it/socialservice");
+		profileConnector = new ProfileService(Constants.PROFILE_SRV_URL);
+		socialConnector = new SocialService(Constants.SOCIAL_SRV_URL);
 	}
 
 	@Test

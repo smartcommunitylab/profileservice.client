@@ -25,4 +25,7 @@ public class Constants {
 	static final String AUTH_TOKEN_2 = "";
 	static final String USER_ID_1 = "";
 
+	static final String PROFILE_SRV_URL = "https://vas-dev.smartcampuslab.it/profileservice";
+	static final String SOCIAL_SRV_URL = "https://vas-dev.smartcampuslab.it/socialservice";
+
 }
