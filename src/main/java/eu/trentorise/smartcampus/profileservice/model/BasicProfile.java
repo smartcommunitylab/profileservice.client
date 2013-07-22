@@ -38,7 +38,7 @@ public class BasicProfile {
 	/**
 	 * Social id of the user
 	 */
-	private long socialId;
+	private String socialId;
 	
 	/**
 	 * Id of the user
@@ -61,11 +61,11 @@ public class BasicProfile {
 		this.surname = surname;
 	}
 
-	public long getSocialId() {
+	public String getSocialId() {
 		return socialId;
 	}
 
-	public void setSocialId(long socialId) {
+	public void setSocialId(String socialId) {
 		this.socialId = socialId;
 	}
 
@@ -87,7 +87,7 @@ public class BasicProfile {
 			JSONObject o = new JSONObject(json);
 			BasicProfile profile = new BasicProfile();
 			profile.setName(o.getString("name"));
-			profile.setSocialId(o.getLong("socialId"));
+			profile.setSocialId(""+o.getLong("socialId"));
 			profile.setSurname(o.getString("surname"));
 			profile.setUserId(o.getString("userId"));
 			return profile;

@@ -54,7 +54,7 @@ public class ExtendedProfile {
 	/**
 	 * Social id
 	 */
-	private long socialId;
+	private String socialId;
 
 	public String getAppId() {
 		return appId;
@@ -98,7 +98,7 @@ public class ExtendedProfile {
 			ExtendedProfile profile = new ExtendedProfile();
 			profile.setAppId(o.getString("appId"));
 			profile.setProfileId(o.getString("profileId"));
-			profile.setSocialId(o.getLong("socialId"));
+			profile.setSocialId(""+o.getLong("socialId"));
 			profile.setUserId(o.getString("userId"));
 			profile.setContent(toMap(o.getJSONObject("content")));
 			return profile;
@@ -138,11 +138,11 @@ public class ExtendedProfile {
 		return list;
 	}
 
-	public long getSocialId() {
+	public String getSocialId() {
 		return socialId;
 	}
 
-	public void setSocialId(long socialId) {
+	public void setSocialId(String socialId) {
 		this.socialId = socialId;
 	}
 
