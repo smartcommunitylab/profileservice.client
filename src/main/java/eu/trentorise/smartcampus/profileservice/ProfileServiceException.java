@@ -16,7 +16,7 @@
 package eu.trentorise.smartcampus.profileservice;
 
 /**
- * Exception thrown by {@link ProfileService}
+ * Exception thrown by {@link BasicProfileService}
  *
  */
 public class ProfileServiceException extends Exception {

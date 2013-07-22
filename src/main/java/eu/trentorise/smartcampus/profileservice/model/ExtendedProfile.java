@@ -51,8 +51,6 @@ public class ExtendedProfile {
 	 */
 	private String userId;
 
-	private long version;
-
 	/**
 	 * Social id
 	 */
@@ -90,14 +88,6 @@ public class ExtendedProfile {
 		this.userId = userId;
 	}
 
-	public long getVersion() {
-		return version;
-	}
-
-	public void setVersion(long version) {
-		this.version = version;
-	}
-
 	/**
 	 * @param json
 	 * @return
@@ -110,7 +100,6 @@ public class ExtendedProfile {
 			profile.setProfileId(o.getString("profileId"));
 			profile.setSocialId(o.getLong("socialId"));
 			profile.setUserId(o.getString("userId"));
-			profile.setVersion(o.getLong("version"));
 			profile.setContent(toMap(o.getJSONObject("content")));
 			return profile;
 		} catch (JSONException e) {
@@ -118,6 +107,7 @@ public class ExtendedProfile {
 		}
 	}
 
+	@SuppressWarnings("unchecked")
 	private static Map<String, Object> toMap(JSONObject o) throws JSONException {
 		Map<String, Object> map = new HashMap<String, Object>();
 		Iterator<String> keys = o.keys();

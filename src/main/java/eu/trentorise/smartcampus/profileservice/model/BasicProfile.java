@@ -45,8 +45,6 @@ public class BasicProfile {
 	 */
 	private String userId;
 	
-	private long version;
-	
 	public String getName() {
 		return name;
 	}
@@ -79,14 +77,6 @@ public class BasicProfile {
 		this.userId = userId;
 	}
 
-	public long getVersion() {
-		return version;
-	}
-
-	public void setVersion(long version) {
-		this.version = version;
-	}
-
 	/**
 	 * @param json
 	 * @return
@@ -100,7 +90,6 @@ public class BasicProfile {
 			profile.setSocialId(o.getLong("socialId"));
 			profile.setSurname(o.getString("surname"));
 			profile.setUserId(o.getString("userId"));
-			profile.setVersion(o.getLong("version"));
 			return profile;
 		} catch (JSONException e) {
 			return null;
