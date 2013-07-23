@@ -67,6 +67,24 @@ public class BasicProfileService {
 	}
 
 	/**
+	 * Return the basic profile associated to the authorization token owner
+	 * 
+	 * @param token
+	 *            an authorization token
+	 * @return a basic profile
+	 * @throws ProfileServiceException
+	 */
+	public BasicProfile getBasicProfileBySocialId(String socialId, String token) throws SecurityException,
+			ProfileServiceException {
+		try {
+			String json = RemoteConnector.getJSON(profileManagerURL, BASIC_PROFILE + "social/"+socialId, token);
+			return BasicProfile.valueOf(json);
+		} catch (RemoteException e) {
+			throw new ProfileServiceException(e);
+		}
+	}
+
+	/**
 	 * Return a basic profile of a user identified by his userId
 	 * 
 	 * @param userId

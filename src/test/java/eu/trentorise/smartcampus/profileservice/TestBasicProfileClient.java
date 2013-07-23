@@ -43,6 +43,11 @@ public class TestBasicProfileClient {
 		Assert.assertNotNull(result);
 		System.out.println(result);
 
+		// get token owner profile
+		result = profileConnector.getBasicProfileBySocialId(result.getSocialId(),Constants.USER_AUTH_TOKEN);
+		Assert.assertNotNull(result);
+		System.out.println(result);
+
 		// get all profiles
 		results = profileConnector.getBasicProfiles(null,
 				Constants.USER_AUTH_TOKEN);
