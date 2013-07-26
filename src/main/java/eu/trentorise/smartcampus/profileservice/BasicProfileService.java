@@ -49,10 +49,10 @@ public class BasicProfileService {
 	}
 
 	/**
-	 * Return the basic profile associated to the authorization token owner
+	 * Return the basic profile associated to the access token owner
 	 * 
 	 * @param token
-	 *            an authorization token
+	 *            a user access token
 	 * @return a basic profile
 	 * @throws ProfileServiceException
 	 */
@@ -67,10 +67,10 @@ public class BasicProfileService {
 	}
 
 	/**
-	 * Return the basic profile associated to the authorization token owner
+	 * Return the basic profile associated to the access token owner
 	 * 
 	 * @param token
-	 *            an authorization token
+	 *            a user or client access token
 	 * @return a basic profile
 	 * @throws ProfileServiceException
 	 */
@@ -90,7 +90,7 @@ public class BasicProfileService {
 	 * @param userId
 	 *            id of the user
 	 * @param token
-	 *            an authorization token
+	 *            an user or client access token
 	 * @return a basic profile
 	 * @throws ProfileServiceException
 	 */
@@ -112,7 +112,7 @@ public class BasicProfileService {
 	 *            if not null, filter the results by full name (name and
 	 *            surname)
 	 * @param token
-	 *            an authorization token
+	 *            an user or client access token
 	 * @return a list of basic profile
 	 * @throws ProfileServiceException
 	 */
@@ -148,7 +148,7 @@ public class BasicProfileService {
 	 * Returns the list of basic profiles of a list of users
 	 * 
 	 * @param userIds
-	 * @param token
+	 * @param token a user or client access token
 	 * @return
 	 * @throws ProfileServiceException
 	 */
