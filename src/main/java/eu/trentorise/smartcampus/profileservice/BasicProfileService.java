@@ -38,6 +38,8 @@ public class BasicProfileService {
 	/** Basic profile path */
 	private static final String BASIC_PROFILE = "basicprofile/";
 
+	private static final String ALL = "all/";
+
 	/**
 	 * 
 	 * @param serverURL
@@ -98,7 +100,7 @@ public class BasicProfileService {
 			throws SecurityException, ProfileServiceException {
 		try {
 			String json = RemoteConnector.getJSON(profileManagerURL,
-					BASIC_PROFILE + userId + "/", token);
+					BASIC_PROFILE+ ALL + userId + "/", token);
 			return BasicProfile.valueOf(json);
 		} catch (RemoteException e) {
 			throw new ProfileServiceException(e);
@@ -132,7 +134,7 @@ public class BasicProfileService {
 
 		String json;
 		try {
-			json = RemoteConnector.getJSON(profileManagerURL, BASIC_PROFILE + query, token);
+			json = RemoteConnector.getJSON(profileManagerURL, BASIC_PROFILE+ALL + query, token);
 		} catch (RemoteException e1) {
 			throw new ProfileServiceException(e1);
 		}
