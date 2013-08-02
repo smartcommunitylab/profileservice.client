@@ -54,7 +54,7 @@ public class TestExtProfileClient {
 		// cannot update non existing
 		fail = false;
 		try {
-			extProfileConnector.updateExtendedProfile(profile.getUserId(),"myapp", "myprofile", map, Constants.CLIENT_AUTH_TOKEN);
+			extProfileConnector.updateExtendedProfile(profile.getUserId(), "myprofile", map, Constants.CLIENT_AUTH_TOKEN);
 		} catch (ProfileServiceException e) {
 			fail = true;
 		}
@@ -64,7 +64,7 @@ public class TestExtProfileClient {
 		fail = false;
 		try {
 			map.put("keyA", "valueA");
-			extProfileConnector.createExtendedProfile(profile.getUserId(), "myapp", "myprofile", map, Constants.USER_AUTH_TOKEN);
+			extProfileConnector.createExtendedProfile(profile.getUserId(), "myprofile", map, Constants.USER_AUTH_TOKEN);
 		} catch (SecurityException e) {
 			fail = true;
 		}
@@ -74,7 +74,7 @@ public class TestExtProfileClient {
 		fail = false;
 		try {
 			map.put("keyA", "valueA");
-			extProfileConnector.createExtendedProfile(profile.getUserId(), "myapp", "myprofile", map, Constants.CLIENT_AUTH_TOKEN);
+			extProfileConnector.createExtendedProfile(profile.getUserId(), "myprofile", map, Constants.CLIENT_AUTH_TOKEN);
 		} catch (ProfileServiceException e) {
 			fail = true;
 		}
@@ -83,32 +83,26 @@ public class TestExtProfileClient {
 		// cannot create an object with same userId/appId/profileId
 		fail = false;
 		try {
-			extProfileConnector.createExtendedProfile(profile.getUserId(), "myapp", "myprofile", map, Constants.CLIENT_AUTH_TOKEN);
+			extProfileConnector.createExtendedProfile(profile.getUserId(), "myprofile", map, Constants.CLIENT_AUTH_TOKEN);
 		} catch (ProfileServiceException e) {
 			fail = true;
 		}
 		Assert.assertTrue(fail);
 
 		// get
-		result = extProfileConnector.getExtendedProfile(profile.getUserId(),
-				"myapp", "myprofile", Constants.CLIENT_AUTH_TOKEN);
+		result = extProfileConnector.getExtendedProfile(profile.getUserId(), "myprofile", Constants.CLIENT_AUTH_TOKEN);
 		Assert.assertNotNull(result);
 		Assert.assertTrue(result.getContent().containsKey("keyA"));
 		Assert.assertTrue(result.getContent().get("keyA").equals("valueA"));
 		System.out.println(result);
 
 		// get many
-		results = extProfileConnector.getExtendedProfilesForUsers(Collections.singletonList(profile.getUserId()),"myapp", "myprofile", Constants.CLIENT_AUTH_TOKEN);
+		results = extProfileConnector.getExtendedProfilesForUsers(Collections.singletonList(profile.getUserId()), "myprofile", Constants.CLIENT_AUTH_TOKEN);
 		Assert.assertNotNull(result);
 		Assert.assertEquals(1, results.size());
 		System.out.println(results);
 		// get many
-		results = extProfileConnector.getExtendedProfilesForUsers(Collections.singletonList(profile.getUserId()),"myapp", null, Constants.CLIENT_AUTH_TOKEN);
-		Assert.assertNotNull(result);
-		Assert.assertEquals(1, results.size());
-		System.out.println(results);
-		// get many
-		results = extProfileConnector.getExtendedProfilesForUsers(Collections.singletonList(profile.getUserId()), null, null, Constants.CLIENT_AUTH_TOKEN);
+		results = extProfileConnector.getExtendedProfilesForUsers(Collections.singletonList(profile.getUserId()),null, Constants.CLIENT_AUTH_TOKEN);
 		Assert.assertNotNull(result);
 		Assert.assertEquals(1, results.size());
 		System.out.println(results);
@@ -116,23 +110,23 @@ public class TestExtProfileClient {
 		// get many with attrs
 		Map<String, Object> attrs = new TreeMap<String, Object>();
 		attrs.put("keyA", "valueA");
-		results = extProfileConnector.getExtendedProfilesByAttributes("myapp", "myprofile", attrs, Constants.CLIENT_AUTH_TOKEN);
+		results = extProfileConnector.getExtendedProfilesByAttributes("myprofile", attrs, Constants.CLIENT_AUTH_TOKEN);
 		Assert.assertNotNull(result);
 		Assert.assertEquals(1, results.size());
 		System.out.println(results);
 
 		attrs.put("keyA", "valueB");
-		results = extProfileConnector.getExtendedProfilesByAttributes("myapp", "myprofile", attrs, Constants.CLIENT_AUTH_TOKEN);
+		results = extProfileConnector.getExtendedProfilesByAttributes("myprofile", attrs, Constants.CLIENT_AUTH_TOKEN);
 		Assert.assertNotNull(result);
 		Assert.assertEquals(0, results.size());
 		
 		// update
 		map = new TreeMap<String, Object>();
 		map.put("keyB", "valueB");
-		extProfileConnector.updateExtendedProfile(profile.getUserId(), "myapp", "myprofile", map, Constants.CLIENT_AUTH_TOKEN);
+		extProfileConnector.updateExtendedProfile(profile.getUserId(), "myprofile", map, Constants.CLIENT_AUTH_TOKEN);
 
 		// get
-		result = extProfileConnector.getExtendedProfile(profile.getUserId(), "myapp", "myprofile", Constants.CLIENT_AUTH_TOKEN);
+		result = extProfileConnector.getExtendedProfile(profile.getUserId(), "myprofile", Constants.CLIENT_AUTH_TOKEN);
 		Assert.assertNotNull(result);
 		Assert.assertFalse(result.getContent().containsKey("keyA"));
 		Assert.assertTrue(result.getContent().containsKey("keyB"));
@@ -140,10 +134,10 @@ public class TestExtProfileClient {
 		System.out.println(result);
 
 		// delete
-		extProfileConnector.deleteExtendedProfile(profile.getUserId(), "myapp", "myprofile", Constants.CLIENT_AUTH_TOKEN);
+		extProfileConnector.deleteExtendedProfile(profile.getUserId(), "myprofile", Constants.CLIENT_AUTH_TOKEN);
 
 		// get with no result for deleted
-		result = extProfileConnector.getExtendedProfile(profile.getUserId(), "myapp", "myprofile", Constants.CLIENT_AUTH_TOKEN);
+		result = extProfileConnector.getExtendedProfile(profile.getUserId(), "myprofile", Constants.CLIENT_AUTH_TOKEN);
 		Assert.assertNull(result);
 		System.out.println(result);
 
@@ -151,7 +145,7 @@ public class TestExtProfileClient {
 		fail = false;
 		try {
 			extProfileConnector.updateExtendedProfile(profile.getUserId(),
-					"myapp", "myprofile", map, Constants.CLIENT_AUTH_TOKEN);
+					"myprofile", map, Constants.CLIENT_AUTH_TOKEN);
 		} catch (ProfileServiceException e) {
 			fail = true;
 		}
@@ -172,7 +166,7 @@ public class TestExtProfileClient {
 		// cannot update non existing
 		fail = false;
 		try {
-			extProfileConnector.updateMyExtendedProfile("myapp", "myprofile", map, Constants.USER_AUTH_TOKEN);
+			extProfileConnector.updateMyExtendedProfile("myprofile", map, Constants.USER_AUTH_TOKEN);
 		} catch (ProfileServiceException e) {
 			fail = true;
 		}
@@ -182,7 +176,7 @@ public class TestExtProfileClient {
 		fail = false;
 		try {
 			map.put("keyA", "valueA");
-			extProfileConnector.createMyExtendedProfile("myapp", "myprofile", map, "token");
+			extProfileConnector.createMyExtendedProfile("myprofile", map, "token");
 		} catch (SecurityException e) {
 			fail = true;
 		}
@@ -192,7 +186,7 @@ public class TestExtProfileClient {
 		fail = false;
 		try {
 			map.put("keyA", "valueA");
-			extProfileConnector.createMyExtendedProfile("myapp", "myprofile", map, Constants.USER_AUTH_TOKEN);
+			extProfileConnector.createMyExtendedProfile("myprofile", map, Constants.USER_AUTH_TOKEN);
 		} catch (ProfileServiceException e) {
 			fail = true;
 		}
@@ -201,21 +195,21 @@ public class TestExtProfileClient {
 		// cannot create an object with same userId/appId/profileId
 		fail = false;
 		try {
-			extProfileConnector.createMyExtendedProfile("myapp", "myprofile", map, Constants.USER_AUTH_TOKEN);
+			extProfileConnector.createMyExtendedProfile("myprofile", map, Constants.USER_AUTH_TOKEN);
 		} catch (ProfileServiceException e) {
 			fail = true;
 		}
 		Assert.assertTrue(fail);
 
 		// get
-		result = extProfileConnector.getMyExtendedProfile("myapp", "myprofile", Constants.USER_AUTH_TOKEN);
+		result = extProfileConnector.getMyExtendedProfile("myprofile", Constants.USER_AUTH_TOKEN);
 		Assert.assertNotNull(result);
 		Assert.assertTrue(result.getContent().containsKey("keyA"));
 		Assert.assertTrue(result.getContent().get("keyA").equals("valueA"));
 		System.out.println(result);
 
 		// get many
-		results = extProfileConnector.getMyExtendedProfiles("myapp", Constants.USER_AUTH_TOKEN);
+		results = extProfileConnector.getMyExtendedProfiles(Constants.USER_AUTH_TOKEN);
 		Assert.assertNotNull(result);
 		Assert.assertEquals(1, results.size());
 		System.out.println(results);
@@ -223,10 +217,10 @@ public class TestExtProfileClient {
 		// update
 		map = new TreeMap<String, Object>();
 		map.put("keyB", "valueB");
-		extProfileConnector.updateMyExtendedProfile("myapp", "myprofile", map, Constants.USER_AUTH_TOKEN);
+		extProfileConnector.updateMyExtendedProfile("myprofile", map, Constants.USER_AUTH_TOKEN);
 
 		// get
-		result = extProfileConnector.getMyExtendedProfile("myapp", "myprofile", Constants.USER_AUTH_TOKEN);
+		result = extProfileConnector.getMyExtendedProfile("myprofile", Constants.USER_AUTH_TOKEN);
 		Assert.assertNotNull(result);
 		Assert.assertFalse(result.getContent().containsKey("keyA"));
 		Assert.assertTrue(result.getContent().containsKey("keyB"));
@@ -234,10 +228,10 @@ public class TestExtProfileClient {
 		System.out.println(result);
 
 		// delete
-		extProfileConnector.deleteMyExtendedProfile("myapp", "myprofile", Constants.USER_AUTH_TOKEN);
+		extProfileConnector.deleteMyExtendedProfile("myprofile", Constants.USER_AUTH_TOKEN);
 
 		// get with no result for deleted
-		result = extProfileConnector.getMyExtendedProfile("myapp", "myprofile", Constants.USER_AUTH_TOKEN);
+		result = extProfileConnector.getMyExtendedProfile("myprofile", Constants.USER_AUTH_TOKEN);
 		Assert.assertNull(result);
 		System.out.println(result);
 
@@ -245,7 +239,7 @@ public class TestExtProfileClient {
 		fail = false;
 		try {
 			extProfileConnector.updateExtendedProfile(profile.getUserId(),
-					"myapp", "myprofile", map, Constants.USER_AUTH_TOKEN);
+					"myprofile", map, Constants.USER_AUTH_TOKEN);
 		} catch (ProfileServiceException e) {
 			fail = true;
 		}
@@ -255,7 +249,7 @@ public class TestExtProfileClient {
 	@After
 	public void finish() throws SecurityException, ProfileServiceException {
 		// delete
-		extProfileConnector.deleteMyExtendedProfile("myapp", "myprofile", Constants.USER_AUTH_TOKEN);
+		extProfileConnector.deleteMyExtendedProfile("myprofile", Constants.USER_AUTH_TOKEN);
 	}
 
 //	@Test

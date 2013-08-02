@@ -32,11 +32,6 @@ import org.json.JSONObject;
 public class ExtendedProfile {
 
 	/**
-	 * Id of the application
-	 */
-	private String appId;
-
-	/**
 	 * Id of the profile
 	 */
 	private String profileId;
@@ -55,14 +50,6 @@ public class ExtendedProfile {
 	 * Social id
 	 */
 	private String socialId;
-
-	public String getAppId() {
-		return appId;
-	}
-
-	public void setAppId(String appId) {
-		this.appId = appId;
-	}
 
 	public String getProfileId() {
 		return profileId;
@@ -96,7 +83,6 @@ public class ExtendedProfile {
 		try {
 			JSONObject o = new JSONObject(json);
 			ExtendedProfile profile = new ExtendedProfile();
-			profile.setAppId(o.getString("appId"));
 			profile.setProfileId(o.getString("profileId"));
 			profile.setSocialId(""+o.getLong("socialId"));
 			profile.setUserId(o.getString("userId"));
@@ -148,7 +134,7 @@ public class ExtendedProfile {
 
 	@Override
 	public String toString() {
-		return "ExtendedProfile [appId=" + appId + ", profileId=" + profileId
+		return "ExtendedProfile [profileId=" + profileId
 				+ ", content=" + content + ", userId=" + userId + ", socialId="
 				+ socialId + "]";
 	}

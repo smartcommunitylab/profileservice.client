@@ -21,14 +21,12 @@ package eu.trentorise.smartcampus.profileservice;
  */
 public class Constants {
 
-	static final String USER_AUTH_TOKEN = "27410bce-c661-4c1e-a009-316ab332d755";
-	static final String CLIENT_AUTH_TOKEN = "e07e93ae-d72b-401d-936f-f466708e950c";
+	static final String USER_AUTH_TOKEN = "29e69bd4-9bbb-491e-b5f8-63fdf1f43a15";
+	static final String CLIENT_AUTH_TOKEN = "332e8a5f-f779-46e8-8abd-09a7a443c31e";
 
-//	static final String BASIC_PROFILE_SRV_URL = "https://vas-dev.smartcampuslab.it/aac";
-//	static final String PROFILE_SRV_URL = "https://vas-dev.smartcampuslab.it/profileservice";
+	static final String BASIC_PROFILE_SRV_URL = "https://vas-dev.smartcampuslab.it/aac";
+	static final String PROFILE_SRV_URL = "https://vas-dev.smartcampuslab.it/core.profile";
 //	static final String SOCIAL_SRV_URL = "https://vas-dev.smartcampuslab.it/socialservice";
 
-	static final String BASIC_PROFILE_SRV_URL = "http://localhost:8088/permission.provider";
-	static final String PROFILE_SRV_URL = "http://localhost:8088/smartcampus.profileservice";
 
 }

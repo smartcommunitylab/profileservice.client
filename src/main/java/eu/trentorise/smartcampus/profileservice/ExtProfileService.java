@@ -55,8 +55,6 @@ public class ExtProfileService {
 	 * 
 	 * @param userId
 	 *            id of the user
-	 * @param appId
-	 *            id of the application
 	 * @param profileId
 	 *            id of the profile
 	 * @param content
@@ -65,18 +63,15 @@ public class ExtProfileService {
 	 *            an authorization token
 	 * @throws ProfileServiceException
 	 */
-	public void createExtendedProfile(String userId, String appId,
-			String profileId, Map<String, Object> content, String token)
+	public void createExtendedProfile(String userId, String profileId, Map<String, Object> content, String token)
 			throws SecurityException, ProfileServiceException {
 			try {
-				if (userId == null || appId == null || profileId == null)
+				if (userId == null || profileId == null)
 					throw new ProfileServiceException("Incomplete request parameters");
 				
 				profileId = URLEncoder.encode(profileId, "utf8");
-				appId = URLEncoder.encode(appId, "utf8");
 				RemoteConnector.postJSON(profileManagerURL,
-						EXTENDED_PROFILE+"app/" + userId + "/" + appId
-								+ "/" + profileId,
+						EXTENDED_PROFILE+"app/" + userId + "/" + profileId,
 						new JSONObject(content).toString(), token);
 			} catch (UnsupportedEncodingException e) {
 				throw new ProfileServiceException(e);
@@ -88,23 +83,21 @@ public class ExtProfileService {
 	/**
 	 * Creates an extended profile for authenticated user
 	 * 
-	 * @param appId
 	 * @param profileId
 	 * @param content
 	 * @param token
 	 * @throws SecurityException
 	 * @throws ProfileServiceException
 	 */
-	public void createMyExtendedProfile(String appId, String profileId,
+	public void createMyExtendedProfile(String profileId,
 			Map<String, Object> content, String token)
 			throws SecurityException, ProfileServiceException {
 		try {
-			if (appId == null || profileId == null)
+			if (profileId == null)
 				throw new ProfileServiceException("Incomplete request parameters");
 
 			profileId = URLEncoder.encode(profileId, "utf8");
-			appId = URLEncoder.encode(appId, "utf8");
-			RemoteConnector.postJSON(profileManagerURL, EXTENDED_PROFILE + "me/" + appId + "/" + profileId,
+			RemoteConnector.postJSON(profileManagerURL, EXTENDED_PROFILE + "me/" + profileId,
 					new JSONObject(content).toString(), token);
 		}catch (SecurityException e) {
 			throw e;
@@ -118,8 +111,6 @@ public class ExtProfileService {
 	 * 
 	 * @param userId
 	 *            id of the user
-	 * @param appId
-	 *            id of the application
 	 * @param profileId
 	 *            id of the profile
 	 * @param token
@@ -127,15 +118,13 @@ public class ExtProfileService {
 	 * @return an extended profile
 	 * @throws ProfileServiceException
 	 */
-	public ExtendedProfile getExtendedProfile(String userId, String appId,
-			String profileId, String token) throws SecurityException, ProfileServiceException {
-		if (userId == null || appId == null || profileId == null)
+	public ExtendedProfile getExtendedProfile(String userId, String profileId, String token) throws SecurityException, ProfileServiceException {
+		if (userId == null || profileId == null)
 			throw new ProfileServiceException("Incomplete request parameters");
 		try {
 			profileId = URLEncoder.encode(profileId, "utf8");
-			appId = URLEncoder.encode(appId, "utf8");
 			String json = RemoteConnector.getJSON(profileManagerURL,
-					EXTENDED_PROFILE + "app/" + userId + "/" + appId
+					EXTENDED_PROFILE + "app/" + userId
 							+ "/" + profileId, token);
 			return ExtendedProfile.valueOf(json);
 		}catch (SecurityException e) {
@@ -150,8 +139,6 @@ public class ExtProfileService {
 	 * 
 	 * @param userId
 	 *            id of the user
-	 * @param appId
-	 *            id of the application
 	 * @param profileId
 	 *            id of the profile
 	 * @param token
@@ -159,15 +146,13 @@ public class ExtProfileService {
 	 * @return an extended profile
 	 * @throws ProfileServiceException
 	 */
-	public ExtendedProfile getMyExtendedProfile(String appId,
-			String profileId, String token) throws SecurityException, ProfileServiceException {
-		if (appId == null || profileId == null)
+	public ExtendedProfile getMyExtendedProfile(String profileId, String token) throws SecurityException, ProfileServiceException {
+		if (profileId == null)
 			throw new ProfileServiceException("Incomplete request parameters");
 		try {
 			profileId = URLEncoder.encode(profileId, "utf8");
-			appId = URLEncoder.encode(appId, "utf8");
 			String json = RemoteConnector.getJSON(profileManagerURL,
-					EXTENDED_PROFILE + "me/" + appId + "/" + profileId, token);
+					EXTENDED_PROFILE + "me/" + profileId, token);
 			return ExtendedProfile.valueOf(json);
 		}catch (SecurityException e) {
 			throw e;
@@ -176,32 +161,6 @@ public class ExtProfileService {
 		}
 	}
 
-	/**
-	 * Return a list of extended profiles of the authenticated user
-	 * 
-	 * @param appId
-	 *            id of the application
-	 * @param token
-	 *            an authorization token
-	 * @return a list of extended profile
-	 * @throws ProfileServiceException
-	 */
-	public List<ExtendedProfile> getMyExtendedProfiles(String appId, String token) throws SecurityException,
-			ProfileServiceException {
-		try {
-			if (appId == null)
-				throw new ProfileServiceException("Incomplete request parameters");
-			appId = URLEncoder.encode(appId, "utf8");
-			String json = RemoteConnector.getJSON(profileManagerURL,
-					EXTENDED_PROFILE + "me/" + appId,
-					token);
-			return ExtendedProfiles.valueOf(json).getProfiles();
-		}catch (SecurityException e) {
-			throw e;
-		} catch (Exception e1) {
-			throw new ProfileServiceException(e1);
-		}
-	}
 
 	/**
 	 * Return a list of extended profiles of the authenticated user
@@ -228,8 +187,6 @@ public class ExtProfileService {
 	 * 
 	 * @param userId
 	 *            id of the user
-	 * @param appId
-	 *            id of the application
 	 * @param profileId
 	 *            id of the profile
 	 * @param token
@@ -237,47 +194,18 @@ public class ExtProfileService {
 	 * @return an extended profile
 	 * @throws ProfileServiceException
 	 */
-	public List<ExtendedProfile> getSharedExtendedProfiles(String appId,
-			String profileId, String token) throws SecurityException, ProfileServiceException {
-		if (appId == null || profileId == null)
+	public List<ExtendedProfile> getSharedExtendedProfiles(String profileId, String token) throws SecurityException, ProfileServiceException {
+		if (profileId == null)
 			throw new ProfileServiceException("Incomplete request parameters");
 		try {
 			profileId = URLEncoder.encode(profileId, "utf8");
-			appId = URLEncoder.encode(appId, "utf8");
 			String json = RemoteConnector.getJSON(profileManagerURL,
-					EXTENDED_PROFILE + "shared/" + appId + "/" + profileId, token);
+					EXTENDED_PROFILE + "shared/" + profileId, token);
 			return ExtendedProfiles.valueOf(json).getProfiles();
 		}catch (SecurityException e) {
 			throw e;
 		} catch (Exception e) {
 			throw new ProfileServiceException(e);
-		}
-	}
-
-	/**
-	 * Return a list of extended profiles of the authenticated user
-	 * 
-	 * @param appId
-	 *            id of the application
-	 * @param token
-	 *            an authorization token
-	 * @return a list of extended profile
-	 * @throws ProfileServiceException
-	 */
-	public List<ExtendedProfile> getSharedExtendedProfiles(String appId, String token) throws SecurityException,
-			ProfileServiceException {
-		try {
-			if (appId == null)
-				throw new ProfileServiceException("Incomplete request parameters");
-			appId = URLEncoder.encode(appId, "utf8");
-			String json = RemoteConnector.getJSON(profileManagerURL,
-					EXTENDED_PROFILE + "shared/" + appId,
-					token);
-			return ExtendedProfiles.valueOf(json).getProfiles();
-		}catch (SecurityException e) {
-			throw e;
-		} catch (Exception e1) {
-			throw new ProfileServiceException(e1);
 		}
 	}
 
@@ -307,24 +235,21 @@ public class ExtProfileService {
 	 * Returns list of extended profiles of a list of users
 	 * 
 	 * @param userId
-	 * @param appId optional app identity
 	 * @param profileId optional profile identity
 	 * @param token
 	 * @return
 	 * @throws ProfileServiceException
 	 */
 	public List<ExtendedProfile> getExtendedProfilesForUsers(List<String> userIds,
-			String appId, String profileId, String token) throws ProfileServiceException, SecurityException {
+			String profileId, String token) throws ProfileServiceException, SecurityException {
 		Map<String, Object> parameters = new HashMap<String, Object>();
 		parameters.put("userIds", userIds);
 		try {
 			String path = EXTENDED_PROFILE+"all";
-			if (appId != null) path += "/"+appId;
 			if (profileId != null) {
-				if (appId == null) throw new ProfileServiceException("App id is required when profile id is used");
 				path += "/"+profileId;
 			}
-			String json = RemoteConnector.getJSON(profileManagerURL, 	path, token, parameters);
+			String json = RemoteConnector.getJSON(profileManagerURL, path, token, parameters);
 			return ExtendedProfiles.valueOf(json).getProfiles();
 		}catch (SecurityException e) {
 			throw e;
@@ -337,25 +262,22 @@ public class ExtProfileService {
 	 * Returns the list of extended profiles filtered by a set of profile
 	 * attributes 
 	 * 
-	 * @param appId
 	 * @param profileId
 	 * @param profileAttributes
 	 * @param token
 	 * @return
 	 * @throws ProfileServiceException
 	 */
-	public List<ExtendedProfile> getExtendedProfilesByAttributes(String appId,
-			String profileId, Map<String, Object> profileAttributes,
+	public List<ExtendedProfile> getExtendedProfilesByAttributes(String profileId, Map<String, Object> profileAttributes,
 			String token) throws SecurityException,  ProfileServiceException {
 
-		if (appId == null || profileId == null)
+		if (profileId == null)
 			throw new ProfileServiceException("Incomplete request parameters");
 
 		try {
 			profileId = URLEncoder.encode(profileId, "utf8");
-			appId = URLEncoder.encode(appId, "utf8");
 			String json = RemoteConnector
-					.postJSON(profileManagerURL, EXTENDED_PROFILE +"all/" + appId + "/" + profileId,
+					.postJSON(profileManagerURL, EXTENDED_PROFILE +"all/" + profileId,
 							new JSONObject(profileAttributes).toString(), token);
 			return ExtendedProfiles.valueOf(json).getProfiles();
 		}catch (SecurityException e) {
@@ -370,8 +292,6 @@ public class ExtProfileService {
 	 * 
 	 * @param userId
 	 *            id of the user
-	 * @param appId
-	 *            id of the application
 	 * @param profileId
 	 *            id of the profile
 	 * @param content
@@ -380,16 +300,15 @@ public class ExtProfileService {
 	 *            an authorization token
 	 * @throws ProfileServiceException
 	 */
-	public void updateExtendedProfile(String userId, String appId,
+	public void updateExtendedProfile(String userId, 
 			String profileId, Map<String, Object> content, String token)
 			throws SecurityException, ProfileServiceException {
-		if (userId == null || appId == null || profileId == null)
+		if (userId == null || profileId == null)
 			throw new ProfileServiceException("Incomplete request parameters");
 
 		try {
-			appId = URLEncoder.encode(appId, "utf8");
 			RemoteConnector.putJSON(profileManagerURL,
-					EXTENDED_PROFILE + "app/" + userId + "/" + appId
+					EXTENDED_PROFILE + "app/" + userId
 							+ "/" + profileId,
 					new JSONObject(content).toString(), token);
 		}catch (SecurityException e) {
@@ -402,25 +321,23 @@ public class ExtProfileService {
 	/**
 	 * Updates an extended profile of authenticated user
 	 * 
-	 * @param appId
 	 * @param profileId
 	 * @param content
 	 * @param token
 	 * @throws SecurityException
 	 * @throws ProfileServiceException
 	 */
-	public void updateMyExtendedProfile(String appId, String profileId,
+	public void updateMyExtendedProfile(String profileId,
 			Map<String, Object> content, String token)
 			throws SecurityException, ProfileServiceException {
 
-		if (appId == null || profileId == null)
+		if (profileId == null)
 			throw new ProfileServiceException("Incomplete request parameters");
 		
 		try {
 			profileId = URLEncoder.encode(profileId, "utf8");
-			appId = URLEncoder.encode(appId, "utf8");
 			RemoteConnector.putJSON(profileManagerURL, 
-					EXTENDED_PROFILE + "me/" + appId + "/" + profileId,
+					EXTENDED_PROFILE + "me/" +  profileId,
 					new JSONObject(content).toString(), token);
 		}catch (SecurityException e) {
 			throw e;
@@ -434,25 +351,21 @@ public class ExtProfileService {
 	 * 
 	 * @param userId
 	 *            id of the user
-	 * @param appId
-	 *            id of the application
 	 * @param profileId
 	 *            id of the profile
 	 * @param token
 	 *            an authorization token
 	 * @throws ProfileServiceException
 	 */
-	public void deleteExtendedProfile(String userId, String appId,
-			String profileId, String token) throws SecurityException,
+	public void deleteExtendedProfile(String userId, String profileId, String token) throws SecurityException,
 			ProfileServiceException {
-		if (userId == null || appId == null || profileId == null)
+		if (userId == null || profileId == null)
 			throw new ProfileServiceException("Incomplete request parameters");
 
 		try {
 			profileId = URLEncoder.encode(profileId, "utf8");
-			appId = URLEncoder.encode(appId, "utf8");
 			RemoteConnector.deleteJSON(profileManagerURL,
-					EXTENDED_PROFILE + "app/" + userId + "/" + appId
+					EXTENDED_PROFILE + "app/" + userId
 							+ "/" + profileId, token);
 		}catch (SecurityException e) {
 			throw e;
@@ -464,23 +377,21 @@ public class ExtProfileService {
 	/**
 	 * Deletes an extended profile of authenticated user
 	 * 
-	 * @param appId
 	 * @param profileId
 	 * @param token
 	 * @throws SecurityException
 	 * @throws ProfileServiceException
 	 */
-	public void deleteMyExtendedProfile(String appId, String profileId,
+	public void deleteMyExtendedProfile(String profileId,
 			String token) throws SecurityException, ProfileServiceException {
-		if (appId == null || profileId == null)
+		if (profileId == null)
 			throw new ProfileServiceException("Incomplete request parameters");
 
 		try {
 			profileId = URLEncoder.encode(profileId, "utf8");
-			appId = URLEncoder.encode(appId, "utf8");
 			RemoteConnector
 					.deleteJSON(profileManagerURL,
-							EXTENDED_PROFILE + "me/" + appId + "/"
+							EXTENDED_PROFILE + "me/"
 							+ profileId, token);
 		}catch (SecurityException e) {
 			throw e;
