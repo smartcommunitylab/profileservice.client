@@ -22,6 +22,7 @@ import junit.framework.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import eu.trentorise.smartcampus.profileservice.model.AccountProfile;
 import eu.trentorise.smartcampus.profileservice.model.BasicProfile;
 
 public class TestBasicProfileClient {
@@ -33,6 +34,13 @@ public class TestBasicProfileClient {
 		profileConnector = new BasicProfileService(Constants.BASIC_PROFILE_SRV_URL);
 	}
 
+	@Test
+	public void accountProfile() throws SecurityException, ProfileServiceException {
+		AccountProfile accountProfile = profileConnector.getAccountProfile(Constants.USER_AUTH_TOKEN);
+		Assert.assertNotNull(accountProfile);
+		System.out.println(accountProfile);
+		
+	}
 	@Test
 	public void basicProfile() throws Exception {
 		BasicProfile result;

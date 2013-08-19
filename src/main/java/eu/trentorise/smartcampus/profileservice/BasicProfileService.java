@@ -24,6 +24,7 @@ import java.util.Map;
 
 import eu.trentorise.smartcampus.network.RemoteConnector;
 import eu.trentorise.smartcampus.network.RemoteException;
+import eu.trentorise.smartcampus.profileservice.model.AccountProfile;
 import eu.trentorise.smartcampus.profileservice.model.BasicProfile;
 import eu.trentorise.smartcampus.profileservice.model.BasicProfiles;
 
@@ -37,6 +38,8 @@ public class BasicProfileService {
 
 	/** Basic profile path */
 	private static final String BASIC_PROFILE = "basicprofile/";
+	/** account profile path */
+	private static final String ACCOUNT_PROFILE = "accountprofile/";
 
 	private static final String ALL = "all/";
 
@@ -63,6 +66,24 @@ public class BasicProfileService {
 		try {
 			String json = RemoteConnector.getJSON(profileManagerURL, BASIC_PROFILE + "me", token);
 			return BasicProfile.valueOf(json);
+		} catch (RemoteException e) {
+			throw new ProfileServiceException(e);
+		}
+	}
+
+	/**
+	 * Return the account profile associated to the access token owner
+	 * 
+	 * @param token
+	 *            a user access token
+	 * @return a basic profile
+	 * @throws ProfileServiceException
+	 */
+	public AccountProfile getAccountProfile(String token) throws SecurityException,
+			ProfileServiceException {
+		try {
+			String json = RemoteConnector.getJSON(profileManagerURL, ACCOUNT_PROFILE + "me", token);
+			return AccountProfile.valueOf(json);
 		} catch (RemoteException e) {
 			throw new ProfileServiceException(e);
 		}
