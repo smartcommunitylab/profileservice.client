@@ -20,6 +20,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -72,13 +73,15 @@ public class AccountProfile {
 		try {
 			JSONObject o = new JSONObject(json);
 			AccountProfile ap = new AccountProfile();
-			String[] accounts = JSONObject.getNames(o);
+			JSONArray accounts = o.names();
 			if (accounts != null) {
-				for (String account : accounts) {
+				for (int i = 0; i < accounts.length(); i++) {
+					String account = accounts.getString(i);
 					JSONObject ao = o.getJSONObject(account);
-					String[] attrs = JSONObject.getNames(ao);
+					JSONArray attrs = ao.names();
 					if (attrs != null) {
-						for (String attr : attrs) {
+						for (int j = 0; j < attrs.length(); j++) {
+							String attr = attrs.getString(j);
 							ap.addAttribute(account, attr, ao.optString(attr, null));
 						}
 					}
