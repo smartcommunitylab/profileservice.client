@@ -15,12 +15,7 @@
  ******************************************************************************/
 package eu.trentorise.smartcampus.profileservice.model;
 
-import java.util.ArrayList;
 import java.util.List;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 /**
  * 
@@ -39,26 +34,6 @@ public class BasicProfiles {
 
 	public void setProfiles(List<BasicProfile> profiles) {
 		this.profiles = profiles;
-	}
-
-	/**
-	 * @param json
-	 * @return
-	 */
-	public static BasicProfiles valueOf(String json) {
-		try {
-			JSONObject o = new JSONObject(json);
-			BasicProfiles profile = new BasicProfiles();
-			profile.setProfiles(new ArrayList<BasicProfile>());
-			JSONArray arr = o.getJSONArray("profiles");
-			if (arr != null)
-				for (int i = 0; i < arr.length(); i++) {
-					profile.getProfiles().add(BasicProfile.valueOf(arr.getJSONObject(i).toString()));
-				}
-			return profile;
-		} catch (JSONException e) {
-			return null;
-		}
 	}
 	
 }

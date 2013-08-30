@@ -15,8 +15,6 @@
  ******************************************************************************/
 package eu.trentorise.smartcampus.profileservice.model;
 
-import org.json.JSONException;
-import org.json.JSONObject;
 
 
 /**
@@ -75,25 +73,6 @@ public class BasicProfile {
 
 	public void setUserId(String userId) {
 		this.userId = userId;
-	}
-
-	/**
-	 * @param json
-	 * @return
-	 * @throws JSONException 
-	 */
-	public static BasicProfile valueOf(String json)  {
-		try {
-			JSONObject o = new JSONObject(json);
-			BasicProfile profile = new BasicProfile();
-			profile.setName(o.getString("name"));
-			profile.setSocialId(""+o.getLong("socialId"));
-			profile.setSurname(o.getString("surname"));
-			profile.setUserId(o.getString("userId"));
-			return profile;
-		} catch (JSONException e) {
-			return null;
-		}
 	}
 
 	@Override

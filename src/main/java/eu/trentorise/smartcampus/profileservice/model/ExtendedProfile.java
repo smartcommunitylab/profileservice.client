@@ -15,15 +15,7 @@
  ******************************************************************************/
 package eu.trentorise.smartcampus.profileservice.model;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 /**
  * An extended profile
@@ -73,55 +65,6 @@ public class ExtendedProfile {
 
 	public void setUserId(String userId) {
 		this.userId = userId;
-	}
-
-	/**
-	 * @param json
-	 * @return
-	 */
-	public static ExtendedProfile valueOf(String json) {
-		try {
-			JSONObject o = new JSONObject(json);
-			ExtendedProfile profile = new ExtendedProfile();
-			profile.setProfileId(o.getString("profileId"));
-			profile.setSocialId(""+o.getLong("socialId"));
-			profile.setUserId(o.getString("userId"));
-			profile.setContent(toMap(o.getJSONObject("content")));
-			return profile;
-		} catch (JSONException e) {
-			return null;
-		}
-	}
-
-	@SuppressWarnings("unchecked")
-	private static Map<String, Object> toMap(JSONObject o) throws JSONException {
-		Map<String, Object> map = new HashMap<String, Object>();
-		Iterator<String> keys = o.keys();
-		while (keys.hasNext()) {
-			String key = keys.next();
-			map.put(key, fromJson(o.get(key)));
-		}
-		return map;
-	}
-
-	private static Object fromJson(Object json) throws JSONException {
-		if (json == JSONObject.NULL) {
-			return null;
-		} else if (json instanceof JSONObject) {
-			return toMap((JSONObject) json);
-		} else if (json instanceof JSONArray) {
-			return toList((JSONArray) json);
-		} else {
-			return json;
-		}
-	}
-
-	private static List<Object> toList(JSONArray array) throws JSONException {
-		List<Object> list = new ArrayList<Object>();
-		for (int i = 0; i < array.length(); i++) {
-			list.add(fromJson(array.get(i)));
-		}
-		return list;
 	}
 
 	public String getSocialId() {

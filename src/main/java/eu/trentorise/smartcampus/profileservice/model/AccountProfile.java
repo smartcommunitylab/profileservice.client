@@ -20,9 +20,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
+import eu.trentorise.smartcampus.network.JsonUtils;
 
 /**
  * User registration information (different account of the registered user)
@@ -69,28 +67,18 @@ public class AccountProfile {
 	 * @return
 	 * @throws JSONException 
 	 */
+	@SuppressWarnings("unchecked")
 	public static AccountProfile valueOf(String json) {
-		try {
-			JSONObject o = new JSONObject(json);
-			AccountProfile ap = new AccountProfile();
-			JSONArray accounts = o.names();
-			if (accounts != null) {
-				for (int i = 0; i < accounts.length(); i++) {
-					String account = accounts.getString(i);
-					JSONObject ao = o.getJSONObject(account);
-					JSONArray attrs = ao.names();
-					if (attrs != null) {
-						for (int j = 0; j < attrs.length(); j++) {
-							String attr = attrs.getString(j);
-							ap.addAttribute(account, attr, ao.optString(attr, null));
-						}
-					}
-				}
+		AccountProfile ap = new AccountProfile();
+		Map<String,Object> map = JsonUtils.toObject(json, Map.class);
+		map = (Map<String, Object>) map.get("accounts");
+		for (String account : map.keySet()) {
+			Map<String,String> attrs = (Map<String, String>) map.get(account);
+			for (String attr : attrs.keySet()) {
+				ap.addAttribute(account, attr, attrs.get(attr));
 			}
-			return ap;
-		} catch (JSONException e) {
-			return null;
 		}
+		return ap;
 	}
 	
 	private void addAttribute(String account, String attribute, String value) {

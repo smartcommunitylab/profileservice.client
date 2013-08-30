@@ -22,6 +22,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import eu.trentorise.smartcampus.network.JsonUtils;
 import eu.trentorise.smartcampus.network.RemoteConnector;
 import eu.trentorise.smartcampus.network.RemoteException;
 import eu.trentorise.smartcampus.profileservice.model.AccountProfile;
@@ -65,7 +66,7 @@ public class BasicProfileService {
 			ProfileServiceException {
 		try {
 			String json = RemoteConnector.getJSON(profileManagerURL, BASIC_PROFILE + "me", token);
-			return BasicProfile.valueOf(json);
+			return JsonUtils.toObject(json, BasicProfile.class);
 		} catch (RemoteException e) {
 			throw new ProfileServiceException(e);
 		}
@@ -101,7 +102,7 @@ public class BasicProfileService {
 			ProfileServiceException {
 		try {
 			String json = RemoteConnector.getJSON(profileManagerURL, BASIC_PROFILE + "social/"+socialId, token);
-			return BasicProfile.valueOf(json);
+			return JsonUtils.toObject(json, BasicProfile.class);
 		} catch (RemoteException e) {
 			throw new ProfileServiceException(e);
 		}
@@ -122,7 +123,7 @@ public class BasicProfileService {
 		try {
 			String json = RemoteConnector.getJSON(profileManagerURL,
 					BASIC_PROFILE+ ALL + userId + "/", token);
-			return BasicProfile.valueOf(json);
+			return JsonUtils.toObject(json, BasicProfile.class);
 		} catch (RemoteException e) {
 			throw new ProfileServiceException(e);
 		}
@@ -161,7 +162,7 @@ public class BasicProfileService {
 		}
 
 		try {
-			return BasicProfiles.valueOf(json).getProfiles();
+			return JsonUtils.toObject(json, BasicProfiles.class).getProfiles();
 		} catch (Exception e) {
 			return Collections.emptyList();
 		}
@@ -181,7 +182,7 @@ public class BasicProfileService {
 		try {
 			String json = RemoteConnector.getJSON(profileManagerURL,
 					"/profiles", token, parameters);
-			return BasicProfiles.valueOf(json).getProfiles();
+			return JsonUtils.toObject(json, BasicProfiles.class).getProfiles();
 		} catch (RemoteException e) {
 			throw new ProfileServiceException(e);
 		}

@@ -21,8 +21,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.json.JSONObject;
-
+import eu.trentorise.smartcampus.network.JsonUtils;
 import eu.trentorise.smartcampus.network.RemoteConnector;
 import eu.trentorise.smartcampus.network.RemoteException;
 import eu.trentorise.smartcampus.profileservice.model.ExtendedProfile;
@@ -72,7 +71,7 @@ public class ExtProfileService {
 				profileId = URLEncoder.encode(profileId, "utf8");
 				RemoteConnector.postJSON(profileManagerURL,
 						EXTENDED_PROFILE+"app/" + userId + "/" + profileId,
-						new JSONObject(content).toString(), token);
+						JsonUtils.toJSON(content), token);
 			} catch (UnsupportedEncodingException e) {
 				throw new ProfileServiceException(e);
 			} catch (RemoteException e) {
@@ -98,7 +97,7 @@ public class ExtProfileService {
 
 			profileId = URLEncoder.encode(profileId, "utf8");
 			RemoteConnector.postJSON(profileManagerURL, EXTENDED_PROFILE + "me/" + profileId,
-					new JSONObject(content).toString(), token);
+					JsonUtils.toJSON(content), token);
 		}catch (SecurityException e) {
 			throw e;
 		} catch (Exception e) {
@@ -126,7 +125,7 @@ public class ExtProfileService {
 			String json = RemoteConnector.getJSON(profileManagerURL,
 					EXTENDED_PROFILE + "app/" + userId
 							+ "/" + profileId, token);
-			return ExtendedProfile.valueOf(json);
+			return JsonUtils.toObject(json, ExtendedProfile.class);
 		}catch (SecurityException e) {
 			throw e;
 		} catch (Exception e) {
@@ -153,7 +152,7 @@ public class ExtProfileService {
 			profileId = URLEncoder.encode(profileId, "utf8");
 			String json = RemoteConnector.getJSON(profileManagerURL,
 					EXTENDED_PROFILE + "me/" + profileId, token);
-			return ExtendedProfile.valueOf(json);
+			return JsonUtils.toObject(json, ExtendedProfile.class);
 		}catch (SecurityException e) {
 			throw e;
 		} catch (Exception e) {
@@ -176,7 +175,7 @@ public class ExtProfileService {
 			String json = RemoteConnector.getJSON(profileManagerURL,
 					EXTENDED_PROFILE + "me",
 					token);
-			return ExtendedProfiles.valueOf(json).getProfiles();
+			return JsonUtils.toObject(json, ExtendedProfiles.class).getProfiles();
 		} catch (Exception e1) {
 			throw new ProfileServiceException(e1);
 		}
@@ -201,7 +200,7 @@ public class ExtProfileService {
 			profileId = URLEncoder.encode(profileId, "utf8");
 			String json = RemoteConnector.getJSON(profileManagerURL,
 					EXTENDED_PROFILE + "shared/" + profileId, token);
-			return ExtendedProfiles.valueOf(json).getProfiles();
+			return JsonUtils.toObject(json, ExtendedProfiles.class).getProfiles();
 		}catch (SecurityException e) {
 			throw e;
 		} catch (Exception e) {
@@ -223,7 +222,7 @@ public class ExtProfileService {
 			String json = RemoteConnector.getJSON(profileManagerURL,
 					EXTENDED_PROFILE + "shared",
 					token);
-			return ExtendedProfiles.valueOf(json).getProfiles();
+			return JsonUtils.toObject(json, ExtendedProfiles.class).getProfiles();
 		}catch (SecurityException e) {
 			throw e;
 		} catch (Exception e1) {
@@ -250,7 +249,7 @@ public class ExtProfileService {
 				path += "/"+profileId;
 			}
 			String json = RemoteConnector.getJSON(profileManagerURL, path, token, parameters);
-			return ExtendedProfiles.valueOf(json).getProfiles();
+			return JsonUtils.toObject(json, ExtendedProfiles.class).getProfiles();
 		}catch (SecurityException e) {
 			throw e;
 		} catch (RemoteException e) {
@@ -278,8 +277,8 @@ public class ExtProfileService {
 			profileId = URLEncoder.encode(profileId, "utf8");
 			String json = RemoteConnector
 					.postJSON(profileManagerURL, EXTENDED_PROFILE +"all/" + profileId,
-							new JSONObject(profileAttributes).toString(), token);
-			return ExtendedProfiles.valueOf(json).getProfiles();
+							JsonUtils.toJSON(profileAttributes), token);
+			return JsonUtils.toObject(json, ExtendedProfiles.class).getProfiles();
 		}catch (SecurityException e) {
 			throw e;
 		} catch (Exception e) {
@@ -310,7 +309,7 @@ public class ExtProfileService {
 			RemoteConnector.putJSON(profileManagerURL,
 					EXTENDED_PROFILE + "app/" + userId
 							+ "/" + profileId,
-					new JSONObject(content).toString(), token);
+					JsonUtils.toJSON(content), token);
 		}catch (SecurityException e) {
 			throw e;
 		} catch (Exception e) {
@@ -338,7 +337,7 @@ public class ExtProfileService {
 			profileId = URLEncoder.encode(profileId, "utf8");
 			RemoteConnector.putJSON(profileManagerURL, 
 					EXTENDED_PROFILE + "me/" +  profileId,
-					new JSONObject(content).toString(), token);
+					JsonUtils.toJSON(content), token);
 		}catch (SecurityException e) {
 			throw e;
 		} catch (Exception e) {

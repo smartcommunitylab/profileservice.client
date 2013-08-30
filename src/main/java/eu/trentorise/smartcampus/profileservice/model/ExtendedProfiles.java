@@ -15,12 +15,7 @@
  ******************************************************************************/
 package eu.trentorise.smartcampus.profileservice.model;
 
-import java.util.ArrayList;
 import java.util.List;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 /**
  * Wrapper for a list of extended profiles
@@ -39,26 +34,6 @@ public class ExtendedProfiles {
 
 	public void setProfiles(List<ExtendedProfile> profiles) {
 		this.profiles = profiles;
-	}
-
-	/**
-	 * @param json
-	 * @return
-	 */
-	public static ExtendedProfiles valueOf(String json) {
-		try {
-			JSONObject o = new JSONObject(json);
-			ExtendedProfiles profile = new ExtendedProfiles();
-			profile.setProfiles(new ArrayList<ExtendedProfile>());
-			JSONArray arr = o.getJSONArray("profiles");
-			if (arr != null)
-				for (int i = 0; i < arr.length(); i++) {
-					profile.getProfiles().add(ExtendedProfile.valueOf(arr.getJSONObject(i).toString()));
-				}
-			return profile;
-		} catch (JSONException e) {
-			return null;
-		}
 	}
 	
 	
