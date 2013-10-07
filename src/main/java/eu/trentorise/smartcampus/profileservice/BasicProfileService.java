@@ -17,6 +17,7 @@ package eu.trentorise.smartcampus.profileservice;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -26,6 +27,7 @@ import eu.trentorise.smartcampus.network.JsonUtils;
 import eu.trentorise.smartcampus.network.RemoteConnector;
 import eu.trentorise.smartcampus.network.RemoteException;
 import eu.trentorise.smartcampus.profileservice.model.AccountProfile;
+import eu.trentorise.smartcampus.profileservice.model.AccountProfiles;
 import eu.trentorise.smartcampus.profileservice.model.BasicProfile;
 import eu.trentorise.smartcampus.profileservice.model.BasicProfiles;
 
@@ -181,8 +183,36 @@ public class BasicProfileService {
 		parameters.put("userIds", userIds);
 		try {
 			String json = RemoteConnector.getJSON(profileManagerURL,
-					"/profiles", token, parameters);
+					BASIC_PROFILE+"profiles", token, parameters);
 			return JsonUtils.toObject(json, BasicProfiles.class).getProfiles();
+		} catch (RemoteException e) {
+			throw new ProfileServiceException(e);
+		}
+	}
+	
+	/**
+	 * Returns the list of account profiles of a list of users
+	 * 
+	 * @param userIds
+	 * @param token a user or client access token
+	 * @return
+	 * @throws ProfileServiceException
+	 */
+	public List<AccountProfile> getAccountProfilesByUserId(List<String> userIds, String token) throws ProfileServiceException {
+		Map<String, Object> parameters = new HashMap<String, Object>();
+		parameters.put("userIds", userIds);
+		try {
+			String json = RemoteConnector.getJSON(profileManagerURL,
+					ACCOUNT_PROFILE+ "profiles", token, parameters);
+			Map<String,Object> map = JsonUtils.toObject(json, Map.class);
+			List<Object> list = (List<Object>) map.get("profiles");
+			List<AccountProfile> profiles = new ArrayList<AccountProfile>();
+			if (list != null) {
+				for (Object o : list) {
+					profiles.add(AccountProfile.valueOf((Map)o));
+				}
+			}
+			return profiles;
 		} catch (RemoteException e) {
 			throw new ProfileServiceException(e);
 		}

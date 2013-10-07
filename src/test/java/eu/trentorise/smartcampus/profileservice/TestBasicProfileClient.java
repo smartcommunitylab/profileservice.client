@@ -15,6 +15,7 @@
  ******************************************************************************/
 package eu.trentorise.smartcampus.profileservice;
 
+import java.util.Collections;
 import java.util.List;
 
 import junit.framework.Assert;
@@ -23,6 +24,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import eu.trentorise.smartcampus.profileservice.model.AccountProfile;
+import eu.trentorise.smartcampus.profileservice.model.AccountProfiles;
 import eu.trentorise.smartcampus.profileservice.model.BasicProfile;
 
 public class TestBasicProfileClient {
@@ -40,6 +42,9 @@ public class TestBasicProfileClient {
 		Assert.assertNotNull(accountProfile);
 		System.out.println(accountProfile);
 		
+		BasicProfile bp = profileConnector.getBasicProfile(Constants.USER_AUTH_TOKEN);
+		List<AccountProfile> profiles = profileConnector.getAccountProfilesByUserId(Collections.singletonList(bp.getUserId()), Constants.CLIENT_AUTH_TOKEN);
+		System.err.println(profiles);
 	}
 	@Test
 	public void basicProfile() throws Exception {
@@ -70,7 +75,7 @@ public class TestBasicProfileClient {
 
 		// get profiles with filter, no results
 		results = profileConnector
-				.getBasicProfiles("?", Constants.USER_AUTH_TOKEN);
+				.getBasicProfiles("=", Constants.USER_AUTH_TOKEN);
 		Assert.assertTrue(results == null || results.size() == 0);
 		System.out.println(results);
 	}

@@ -69,9 +69,18 @@ public class AccountProfile {
 	 */
 	@SuppressWarnings("unchecked")
 	public static AccountProfile valueOf(String json) {
-		AccountProfile ap = new AccountProfile();
 		Map<String,Object> map = JsonUtils.toObject(json, Map.class);
-		map = (Map<String, Object>) map.get("accounts");
+		return valueOf(map);
+	}
+
+	/**
+	 * @param map
+	 * @return
+	 */
+	@SuppressWarnings("unchecked")
+	public static AccountProfile valueOf(Map<String, Object> inmap) {
+		Map<String,Object> map = (Map<String, Object>) inmap.get("accounts");
+		AccountProfile ap = new AccountProfile();
 		for (String account : map.keySet()) {
 			Map<String,String> attrs = (Map<String, String>) map.get(account);
 			for (String attr : attrs.keySet()) {
@@ -95,5 +104,18 @@ public class AccountProfile {
 		return "AccountProfile "+attributes;
 	}
 
+	/**
+	 * @return the attributes
+	 */
+	public Map<String, Map<String, String>> getAttributes() {
+		return attributes;
+	}
+
+	/**
+	 * @param attributes the attributes to set
+	 */
+	public void setAttributes(Map<String, Map<String, String>> attributes) {
+		this.attributes = attributes;
+	}
 	
 }
