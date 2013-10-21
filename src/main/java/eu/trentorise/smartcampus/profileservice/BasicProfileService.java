@@ -27,7 +27,6 @@ import eu.trentorise.smartcampus.network.JsonUtils;
 import eu.trentorise.smartcampus.network.RemoteConnector;
 import eu.trentorise.smartcampus.network.RemoteException;
 import eu.trentorise.smartcampus.profileservice.model.AccountProfile;
-import eu.trentorise.smartcampus.profileservice.model.AccountProfiles;
 import eu.trentorise.smartcampus.profileservice.model.BasicProfile;
 import eu.trentorise.smartcampus.profileservice.model.BasicProfiles;
 
